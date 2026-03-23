@@ -1,0 +1,30 @@
+## Build artifacts
+bin/
+obj/
+publish/
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Test results
+TestResults/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log
