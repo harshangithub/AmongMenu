@@ -1,0 +1,108 @@
+<Window x:Class="AmongMenu.Views.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AmongMenu Overlay"
+        Width="420" Height="600"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#CC000000"
+        Topmost="True"
+        ResizeMode="CanResizeWithGrip"
+        Left="20" Top="20">
+
+    <Window.Resources>
+        <!-- Section header style -->
+        <Style x:Key="SectionHeader" TargetType="TextBlock">
+            <Setter Property="Foreground"   Value="#FFDDDDDD"/>
+            <Setter Property="FontFamily"   Value="Consolas"/>
+            <Setter Property="FontSize"     Value="13"/>
+            <Setter Property="FontWeight"   Value="Bold"/>
+            <Setter Property="Margin"       Value="6,8,6,2"/>
+        </Style>
+
+        <!-- Player row style -->
+        <Style x:Key="PlayerRow" TargetType="TextBlock">
+            <Setter Property="Foreground"   Value="#FFEEEEEE"/>
+            <Setter Property="FontFamily"   Value="Consolas"/>
+            <Setter Property="FontSize"     Value="11"/>
+            <Setter Property="Margin"       Value="12,1,6,1"/>
+        </Style>
+
+        <!-- Separator line -->
+        <Style x:Key="Sep" TargetType="Rectangle">
+            <Setter Property="Height"  Value="1"/>
+            <Setter Property="Fill"    Value="#FF444444"/>
+            <Setter Property="Margin"  Value="6,4,6,4"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Title bar -->
+            <RowDefinition Height="28"/>
+            <!-- Status -->
+            <RowDefinition Height="22"/>
+            <!-- Tracer canvas -->
+            <RowDefinition Height="160"/>
+            <!-- Separator -->
+            <RowDefinition Height="10"/>
+            <!-- Player lists (scrollable) -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ── Title bar ──────────────────────────────────────────────── -->
+        <Grid Grid.Row="0" Background="#FF1A1A2E" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <TextBlock Text="🎮  AmongMenu Overlay"
+                       Foreground="#FFFF4655"
+                       FontFamily="Consolas"
+                       FontSize="13"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"/>
+            <Button Content="✕"
+                    Width="28" Height="28"
+                    HorizontalAlignment="Right"
+                    Background="Transparent"
+                    Foreground="#FFAAAAAA"
+                    BorderThickness="0"
+                    FontSize="14"
+                    Click="CloseButton_Click"
+                    Cursor="Hand"/>
+        </Grid>
+
+        <!-- ── Status line ────────────────────────────────────────────── -->
+        <TextBlock x:Name="StatusText"
+                   Grid.Row="1"
+                   Text="Connecting…"
+                   Foreground="#FF88CCFF"
+                   FontFamily="Consolas"
+                   FontSize="11"
+                   VerticalAlignment="Center"
+                   Margin="10,0,0,0"
+                   Background="#FF0D0D1A"/>
+
+        <!-- ── Tracer canvas ──────────────────────────────────────────── -->
+        <Border Grid.Row="2" Background="#FF0A0A18" BorderBrush="#FF333355" BorderThickness="0,0,0,1">
+            <Canvas x:Name="TracerCanvas"
+                    ClipToBounds="True"/>
+        </Border>
+
+        <!-- ── Legend ─────────────────────────────────────────────────── -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Ellipse Width="8" Height="8" Fill="Red"      Margin="4,0"/>
+            <TextBlock Text="&lt;2u" Foreground="#FF888888" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+            <Ellipse Width="8" Height="8" Fill="Yellow"   Margin="8,0,4,0"/>
+            <TextBlock Text="2–5u" Foreground="#FF888888" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+            <Ellipse Width="8" Height="8" Fill="LimeGreen" Margin="8,0,4,0"/>
+            <TextBlock Text="&gt;5u" Foreground="#FF888888" FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- ── Player lists ───────────────────────────────────────────── -->
+        <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Auto" Background="#FF0D0D1A">
+            <StackPanel x:Name="PlayerListPanel" Margin="0,4,0,8"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
