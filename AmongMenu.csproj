@@ -26,4 +26,11 @@
     </Content>
   </ItemGroup>
 
+  <!-- Copy the configurable offsets file so users can edit it next to the exe -->
+  <ItemGroup>
+    <Content Include="config\offsets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,58 @@
+{
+  "$comment": "IL2CPP memory offsets for Among Us (Steam). All numeric values are hex strings. Edit this file to fix 'No player list found' after a game patch – no recompilation needed.",
+  "gameVersion": "2024.6.18",
+
+  "gameData": {
+    "$comment": "RVA of the static pointer that holds the address of the static-field storage for GameData. Find with: IL2CPP dumper → GameData$$get_Instance → first MOV RAX,[RIP+x] → compute RVA.",
+    "staticRva": "0x01F890B0",
+    "instanceOffset": "0xB8"
+  },
+
+  "localPlayer": {
+    "$comment": "RVA of the static pointer for PlayerControl.LocalPlayer.",
+    "staticRva": "0x01F89290",
+    "offset": "0xB8"
+  },
+
+  "playerList": {
+    "$comment": "Offsets within the GameData instance and the backing Il2CppList.",
+    "allPlayersOffset": "0x24",
+    "listItemsOffset": "0x10",
+    "listCountOffset": "0x18",
+    "arrayFirstElement": "0x20",
+    "arrayElementSize": "0x08"
+  },
+
+  "playerInfo": {
+    "$comment": "Field offsets within a PlayerInfo (NetworkedPlayerInfo) instance.",
+    "nameOffset": "0x10",
+    "colorOffset": "0x1C",
+    "roleOffset": "0x2C",
+    "isDeadOffset": "0x30",
+    "objectOffset": "0x08"
+  },
+
+  "playerControl": {
+    "$comment": "Field offsets within a PlayerControl instance.",
+    "positionXOffset": "0x78",
+    "positionYOffset": "0x7C",
+    "roomTrackerOffset": "0xA0",
+    "roomIdOffset": "0x10"
+  },
+
+  "signatures": {
+    "$comment": "Optional AOB (array-of-bytes) patterns used by OffsetScanner to auto-detect the static RVAs above when the hardcoded offsets stop working. '??' is a wildcard byte. ripDisplacement is the byte index of the 4-byte RIP-relative displacement inside the matched instruction; instrSize is the full instruction length used to compute the target address.",
+    "gameDataStatic": {
+      "pattern": "48 8B 05 ?? ?? ?? ?? 48 8B 80 B8 00 00 00",
+      "ripDisplacement": 3,
+      "instrSize": 7,
+      "enabled": true
+    },
+    "localPlayerStatic": {
+      "pattern": "48 8B 0D ?? ?? ?? ?? 48 85 C9",
+      "ripDisplacement": 3,
+      "instrSize": 7,
+      "enabled": true
+    }
+  }
+}
