@@ -48,6 +48,8 @@
             <RowDefinition Height="10"/>
             <!-- Player lists (scrollable) -->
             <RowDefinition Height="*"/>
+            <!-- Debug log (hidden until DBG toggle is on) -->
+            <RowDefinition x:Name="DebugRow" Height="0"/>
         </Grid.RowDefinitions>
 
         <!-- ── Title bar ──────────────────────────────────────────────── -->
@@ -59,15 +61,30 @@
                        FontWeight="Bold"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"/>
-            <Button Content="✕"
-                    Width="28" Height="28"
-                    HorizontalAlignment="Right"
-                    Background="Transparent"
-                    Foreground="#FFAAAAAA"
-                    BorderThickness="0"
-                    FontSize="14"
-                    Click="CloseButton_Click"
-                    Cursor="Hand"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <ToggleButton x:Name="DebugToggle"
+                              Content="DBG"
+                              Width="38" Height="22"
+                              Margin="0,3,4,3"
+                              Background="#FF222244"
+                              Foreground="#FF888888"
+                              BorderBrush="#FF444466"
+                              BorderThickness="1"
+                              FontFamily="Consolas"
+                              FontSize="10"
+                              Cursor="Hand"
+                              ToolTip="Toggle debug logging"
+                              Checked="DebugToggle_Checked"
+                              Unchecked="DebugToggle_Unchecked"/>
+                <Button Content="✕"
+                        Width="28" Height="28"
+                        Background="Transparent"
+                        Foreground="#FFAAAAAA"
+                        BorderThickness="0"
+                        FontSize="14"
+                        Click="CloseButton_Click"
+                        Cursor="Hand"/>
+            </StackPanel>
         </Grid>
 
         <!-- ── Status line ────────────────────────────────────────────── -->
@@ -104,5 +121,19 @@
         <ScrollViewer Grid.Row="4" VerticalScrollBarVisibility="Auto" Background="#FF0D0D1A">
             <StackPanel x:Name="PlayerListPanel" Margin="0,4,0,8"/>
         </ScrollViewer>
+
+        <!-- ── Debug log ──────────────────────────────────────────────── -->
+        <Border Grid.Row="5" Background="#FF080810" BorderBrush="#FF333355" BorderThickness="0,1,0,0">
+            <ScrollViewer x:Name="DebugScrollViewer"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
+                <TextBlock x:Name="DebugText"
+                           Foreground="#FF44FF88"
+                           FontFamily="Consolas"
+                           FontSize="9"
+                           TextWrapping="NoWrap"
+                           Margin="6,4,6,4"/>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>

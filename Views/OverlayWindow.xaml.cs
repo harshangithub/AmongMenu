@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -14,10 +15,22 @@ namespace AmongMenu.Views
     /// Main overlay window.
     /// Refreshes game data at <see cref="RefreshIntervalMs"/> ms and redraws
     /// the tracer canvas and player list on every tick.
+    ///
+    /// Debug mode
+    /// ──────────
+    /// Click the <b>DBG</b> toggle in the title bar to enable debug logging.
+    /// When active, a green-on-dark log panel expands at the bottom of the
+    /// window showing:
+    ///   • Module base address and size
+    ///   • Resolved pointer values at each step of the reading chain
+    ///   • Signature-scan candidates when a pointer resolves to null
+    /// Copy candidate RVAs from the scan output into <c>config/offsets.json</c>
+    /// to fix reading after a game patch.
     /// </summary>
     public partial class OverlayWindow : Window
     {
         private const int RefreshIntervalMs = 500;
+        private const int DebugPanelHeight  = 150;
 
         private readonly GameMemoryReader _memReader = new GameMemoryReader();
         private readonly DispatcherTimer  _timer     = new DispatcherTimer();
@@ -38,6 +51,35 @@ namespace AmongMenu.Views
             StatusText.Text = data.GameStatus;
             RedrawTracers(data);
             RedrawPlayerList(data);
+
+            if (_memReader.DebugMode)
+                UpdateDebugPanel();
+        }
+
+        // ── Debug mode toggle ─────────────────────────────────────────────────
+
+        private void DebugToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            _memReader.DebugMode  = true;
+            DebugRow.Height       = new GridLength(DebugPanelHeight);
+            DebugToggle.Foreground = new SolidColorBrush(Colors.LimeGreen);
+        }
+
+        private void DebugToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _memReader.DebugMode  = false;
+            DebugRow.Height       = new GridLength(0);
+            DebugText.Text        = string.Empty;
+            DebugToggle.Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
+        }
+
+        private void UpdateDebugPanel()
+        {
+            string log = _memReader.DebugLog;
+            if (DebugText.Text == log) return;
+            DebugText.Text = log;
+            // Auto-scroll to bottom
+            DebugScrollViewer.ScrollToEnd();
         }
 
         // ── Tracer canvas ─────────────────────────────────────────────────────
